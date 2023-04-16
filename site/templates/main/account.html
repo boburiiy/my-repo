@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="m-5 bg-primary rounded p-2 text-light">your profile <span class="bg-light rounded p-1 text-dark">{</span></h2>
+<div class="card mb-3 container" data-bs-theme="dark">
+    <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-start">
+            <img src="{{ image }}" class="img-fluid rounded-start" height="100%" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title bg-light text-primary rounded p-1">{{ name }}</h5>
+                <p class="card-text bg-light text-primary rounded p-1">{{ bio }}</p>
+                <p class="card-text bg-light text-primary rounded p-1">{{ email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<h2 class="m-5 bg-primary rounded p-3"> <span class="bg-light">}</span></h2>
+{% endblock %}

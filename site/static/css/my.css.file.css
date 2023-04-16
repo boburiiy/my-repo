@@ -1,0 +1,18 @@
+.service-item {
+    height: 300px;
+    align-items: start;
+    filter: grayscale(1.2);
+    padding: 20px;
+    gap: 20px;
+    transition: .5s;
+}
+
+.service-item i.fa {
+    transform: scale(2);
+}
+
+.service-item:hover {
+    filter: hue-rotate(180deg);
+    box-shadow: 1px 1px 10px 1px rgb(100, 100, 100);
+    transform:scale(1.05);
+}

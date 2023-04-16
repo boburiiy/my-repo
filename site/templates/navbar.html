@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        {% if request.user.is_authenticated %}
+        <img style="max-width: 50px;max-height: 50px;" alt="">
+        <a class="navbar-brand"
+            style="padding-left: 50px;background: url('{{ image }}') left no-repeat;background-size: 50px;"
+            href="{% url 'profile' %}">{{ request.user.username }}<sub>2</sub><sup>O</sup></a>
+        {% else %}
+        <a class="navbar-brand">{{ request.user }}<sub>2</sub>O </a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'blogs' %}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'users' %}">Users</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        actions
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="#"><a class="nav-link" href="{% url 'login' %}">login</a></a>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><a class="nav-link"
+                                    href="{% url 'register' %}">register</a></a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

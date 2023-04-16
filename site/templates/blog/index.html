@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Blogs{% endblock title %}
+{% block content %}
+<div class="container-fluid bg-primary py-5 bg-header"
+    style="margin-bottom: 90px;background:linear-gradient(rgba(9, 30, 62, .7), rgba(9, 30, 62, .7)), url({% static 'img/carousel-1.jpg' %});">
+    <div class="row py-5">
+        <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+            <h1 class="display-4 text-white animated zoomIn">Blog Grid</h1>
+            <a href="{% url 'index' %}" class="h5 text-white">Home</a>
+            <i class="far fa-circle text-white px-2"></i>
+            <a href="{% url 'blogadd' %}" class="h5 text-white">add</a>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Blog list Start -->
+            <div class="col-lg-8">
+                <div class="row g-5">
+                    {% for card in cards %}
+                    <div class="col-md-6 wow slideInUp" data-wow-delay="0.1s">
+                        <div class="blog-item bg-light rounded bg-primary overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                <img class="img-fluid" src="{{ card.image.url }}" alt="">
+                                <span class="position-absolute start-0 bg-primary text-white rounded-end py-2 px-4"
+                                    href="">{{ card.theme }}</span>
+                            </div>
+                            <div class="p-4 bg-info">
+                                <div class="d-flex mb-3">
+                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{ card.author }}</small>
+                                    <small><i class="far fa-calendar-alt text-primary me-2"></i>{{ card.time }}</small>
+                                </div>
+                                <h4 class="mb-3">{{ card.header }}</h4>
+                                <p class="rounded p-1" style="max-height: 100px;overflow: hidden;background: #fff;">{{ card.content }}</p>
+                                <a class="text-uppercase" href="{% url 'blogdtl' card.id %}">{{ card.link }} <i
+                                        class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Blog list End -->
+
+            <!-- Sidebar Start -->
+            <div class="col-lg-4">
+                <!-- Search Form Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="input-group">
+                        <form class="d-flex" method="POST">
+                            {% csrf_token %}
+                            <input type="text" class="form-control p-3" name="header" placeholder="type header">
+                            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Search Form End -->
+
+                <!-- Category Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">themes</h3>
+                    </div>
+                    <div class="link-animated d-flex flex-column justify-content-start">
+                        {% if themes %}
+                        {% for i in themes %}
+                        <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2" href="{% url 'blogd' i.theme %}">
+                            <i class="bi bi-arrow-right me-2"></i>{{ i.theme }}
+                        </a>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Category End -->
+            </div>
+            <!-- Sidebar End -->
+        </div>
+    </div>
+</div>
+{% if cards.has_other_pages %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if cards.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">Birinchi</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ cards.previous_page_number }}">Oldingi</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Birinchi</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Oldingi</a>
+        </li>
+        {% endif %}
+
+        {% for num in cards.paginator.page_range %}
+        {% if cards.number == num %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ num }}</a>
+        </li>
+        {% elif num > cards.number|add:'-3' and num < cards.number|add:'3' %} <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if cards.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ cards.next_page_number }}">Keyingi</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ cards.paginator.num_pages }}">Oxirgi</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">Keyingi</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">Oxirgi</a>
+            </li>
+            {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

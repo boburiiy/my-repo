@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Users
+{% endblock title %}
+{% block content %}
+
+<table class="table table-dark container table-rounded table-bordered border-white my-5">
+    <thead class="container rounded">
+        <tr class="table-active rounded">
+            <th scope="col rounded">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in users %}
+        <tr>
+            <th scope="row">{{ i.id }}</th>
+            <td>{{ i }}</td>
+            <td>{{ i.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

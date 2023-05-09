@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}
-Users
-{% endblock title %}
+{% block title %}Users{% endblock title %}
 {% block content %}
-
-<table class="table table-dark container table-rounded table-bordered border-white my-5">
-    <thead class="container rounded">
+<div style="height:100px"></div>
+<table class="table table-dark container table-rounded table-bordered border-white ">
+   <thead class="container rounded">
         <tr class="table-active rounded">
             <th scope="col rounded">#</th>
             <th scope="col">Username</th>
@@ -14,12 +12,14 @@ Users
     </thead>
     <tbody>
         {% for i in users %}
+        {% if not i.is_superuser and not i.username == request.user.username %}
         <tr>
             <th scope="row">{{ i.id }}</th>
-            <td>{{ i }}</td>
+            <td><a href="{% url 'user_f' i %}" class="text-primary">{{ i }}</a></td>
             <td>{{ i.email }}</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
-</table>
+</table> 
 {% endblock content %}

@@ -1,9 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
     <div class="container-fluid">
-        {% if request.user.is_authenticated %}
-        <img style="max-width: 50px;max-height: 50px;" alt="">
-        <a class="navbar-brand"
-            style="padding-left: 50px;background: url('{{ image }}') left no-repeat;background-size: 50px;"
+        {% if request.user.is_authenticated and not request.user.is_superuser %}
+        <a class="navbar-brand rounded border border-primary bg-warning border-2 text-dark"
+            style="padding-left: 50px;background: url('{{ image }}') left no-repeat;background-size: 50px; border: 1px solid #fff;"
             href="{% url 'profile' %}">{{ request.user.username }}<sub>2</sub><sup>O</sup></a>
         {% else %}
         <a class="navbar-brand">{{ request.user }}<sub>2</sub>O </a>

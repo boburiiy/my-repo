@@ -11,6 +11,7 @@
     transform: scale(2);
 }
 
+textarea{}
 .service-item:hover {
     filter: hue-rotate(180deg);
     box-shadow: 1px 1px 10px 1px rgb(100, 100, 100);

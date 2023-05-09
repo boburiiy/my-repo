@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} {{ user }} {% endblock title %}
+
+{% block content %}
+<h2 class="m-5 bg-primary rounded p-2 text-light"> Profile of {{user}} <span
+        class="bg-light rounded p-1 text-dark">{</span>
+</h2>
+<div class="card mb-3 container" data-bs-theme="dark">
+    <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-start">
+            <img src="{{ user.image.url }}" class="img-fluid rounded-start" height="100%" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title bg-light text-primary rounded p-1">{{ user }}</h5>
+                <p class="card-text bg-light text-primary rounded p-1">{{ user.bio }}</p>
+                <p class="card-text bg-light text-primary rounded p-1">{{ user.email }}</p>
+                <p class="card-text bg-light text-primary rounded p-1">{{ user.id }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<h2 class="m-5 bg-primary rounded p-3"><span class="bg-light rounded p-1">} <a href="{% url 'messenger' user %}">message with
+            user</a></span></h2>
+{% endblock %}

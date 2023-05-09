@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.8/css/all.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+<div class="d-flex">
+
+
+  <div class="d-flex flex-column z-3 flex-shrink-0 p-3 text-white bg-dark"
+    style="width: 280px;">
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'news' 'products' %}" class="nav-link text-white" aria-current="page">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#home"></use>
+          </svg>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'news' 'brands' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#speedometer2"></use>
+          </svg>
+          Brands
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'news' 'categories' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#table"></use>
+          </svg>
+          Categories
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'news' 'products' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#grid"></use>
+          </svg>
+          Products
+        </a>
+      </li>
+    </ul>
+    <hr>
+  </div>
+
+  <div class="content-wrapper">
+    {% for i in data %}
+    {% if typen == 'products' %}
+    <div class="news-card">
+      <img src="{{ i.image }}" alt="" class="news-card__image">
+      <div class="news-card__text-wrapper">
+        <h2 class="news-card__title">{{ i.title }}</h2>
+        <div class="news-card__post-date">Jan 29, 2018</div>
+        <div class="news-card__details-wrapper">
+          <p class="news-card__excerpt">{{ i.desc }} &hellip;</p>
+          <a href="#" class="news-card__read-more">Read more <i class="fas fa-long-arrow-alt-right"></i></a>
+        </div>
+      </div>
+    </div>
+    {% elif typen == 'categories' %}
+    <div class="list-group m-1">
+      <button type="button" class="list-group-item list-group-item-action active">
+        ID & Title & slug
+      </button>
+      <button type="button" class="list-group-item list-group-item-action">{{ i.title }}</button>
+      <button type="button" class="list-group-item list-group-item-action" disabled>{{ i.slug }}</button>
+      <button type="button" class="list-group-item list-group-item-action" disabled>{{ i.id }}</button>
+    </div>
+    {% elif typen == 'brands' %}
+    <div class="list-group m-1">
+      <button type="button" class="list-group-item list-group-item-action active">
+        ID & Title
+      </button>
+      <button type="button" class="list-group-item list-group-item-action">{{ i.title }}</button>
+      <button type="button" class="list-group-item list-group-item-action" disabled>{{ i.id }}</button>
+    </div>
+    {% else %}
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock js %}

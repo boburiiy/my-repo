@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card mb-3" data-bs-theme="dark">
-    <img src="{{ card.image.url }}" width="50%" class="card-img-top" alt="...">
+<div class="card my-3 border border-light" data-bs-theme="dark">
+    <img src="{{ card.image.url }}" style="width:50vw" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">{{ card.header }}</h5>
-        <p class="card-text">{{ card.content }}</p>
         <p class="card-text"><small class="text-body-secondary">Last updated {{ card.time }}</small></p>
     </div>
+    <p class="card-text border border-bottom-0 border-light rounded p-1  bg-dark">{{ card.content }}</p>
 </div>
 {% endblock content %}

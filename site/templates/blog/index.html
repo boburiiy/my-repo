@@ -2,6 +2,9 @@
 {% load static %}
 {% block title %}Blogs{% endblock title %}
 {% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 <div class="container-fluid bg-primary py-5 bg-header"
     style="margin-bottom: 90px;background:linear-gradient(rgba(9, 30, 62, .7), rgba(9, 30, 62, .7)), url({% static 'img/carousel-1.jpg' %});">
     <div class="row py-5">
@@ -30,13 +33,20 @@
                             </div>
                             <div class="p-4 bg-info">
                                 <div class="d-flex mb-3">
-                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{ card.author }}</small>
+                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i><a
+                                            href="{% url 'user_f' card.author %}">{{ card.author }}</a></small>
                                     <small><i class="far fa-calendar-alt text-primary me-2"></i>{{ card.time }}</small>
                                 </div>
                                 <h4 class="mb-3">{{ card.header }}</h4>
                                 <p class="rounded p-1" style="max-height: 100px;overflow: hidden;background: #fff;">{{ card.content }}</p>
                                 <a class="text-uppercase" href="{% url 'blogdtl' card.id %}">{{ card.link }} <i
                                         class="bi bi-arrow-right"></i></a>
+                                <br>
+                                {% if card.author == request.user.username %}
+                                <a data-id="{{ card.id }}" class="b_d_b">
+                                    <i class="fa fa-thin fa-trash fa-shake" style="color: #ff0000;"></i>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -48,6 +58,7 @@
             <!-- Sidebar Start -->
             <div class="col-lg-4">
                 <!-- Search Form Start -->
+                {% if not hide %}
                 <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
                     <div class="input-group">
                         <form class="d-flex" method="POST">
@@ -57,18 +68,19 @@
                         </form>
                     </div>
                 </div>
+                {% endif %}
                 <!-- Search Form End -->
 
                 <!-- Category Start -->
+                {% if themes %}
                 <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
                     <div class="section-title section-title-sm position-relative pb-3 mb-4">
                         <h3 class="mb-0">themes</h3>
                     </div>
                     <div class="link-animated d-flex flex-column justify-content-start">
-                        {% if themes %}
                         {% for i in themes %}
-                        <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2" href="{% url 'blogd' i.theme %}">
-                            <i class="bi bi-arrow-right me-2"></i>{{ i.theme }}
+                        <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2" href="{% url 'blogd' i %}">
+                            <i class="bi bi-arrow-right me-2"></i>{{ i }}
                         </a>
                         {% endfor %}
                         {% endif %}
@@ -127,5 +139,23 @@
             {% endif %}
     </ul>
 </nav>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/266a8d22fc.js" crossorigin="anonymous"></script>
 {% endif %}
 {% endblock content %}
+{% block js %}
+<script>
+    console.log(document.querySelectorAll('.b_d_b'))
+    document.querySelectorAll('.b_d_b').forEach(i => {
+        i.onclick = () => {
+            if (confirm(`Are you sure what you need to delete this blog ${i.parentElement.querySelector('h4.mb-3').innerHTML}`)) {
+                var id = i.getAttribute('data-id')
+                var domainName = window.location.hostname;
+                var urldelete = `/blogs/delete/${id}`
+                window.location.href = urldelete;
+            }
+        }
+    })
+</script>
+{% endblock js %}

@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="m-5 bg-primary rounded p-2 text-light">your profile <span class="bg-light rounded p-1 text-dark">{</span></h2>
+{% if not request.user.is_superuser %}
+
+<h2 class="m-5 bg-primary rounded p-2 text-light">your profile <span class="bg-light rounded p-1 text-dark">{</span>
+</h2>
 <div class="card mb-3 container" data-bs-theme="dark">
     <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-start">
@@ -16,5 +19,21 @@
         </div>
     </div>
 </div>
-<h2 class="m-5 bg-primary rounded p-3"> <span class="bg-light">}</span></h2>
+<h2 class="m-5 bg-primary rounded p-3 d-flex flex-column"> <span class="bg-light rounded">}</span>
+</h2>
+
+<div class="d-flex mw-50 border border-2 text-light border-light bg-success rounded p-2"
+    style="white-space: pre;">Getten messages{ {% for i in getted %}
+    {{ i.from_user }} : {{ i }}, {% endfor %}
+}</div>
+
+<div class="d-flex mw-50 border border-2 text-light border-light bg-success rounded p-2"
+    style="white-space: pre;">Sended messages{ {% for i in smsgs %}
+    {{ i.to_user }} : {{ i }}, {% endfor %}
+}</div>
+{% else %}
+<h1>
+    You`re admin
+</h1>
+{% endif %}
 {% endblock %}
